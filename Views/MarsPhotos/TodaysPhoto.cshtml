@@ -1,0 +1,30 @@
+﻿@inject IJSRuntime JS
+
+@{
+	ViewData["Title"] = "Today's Mars Photo";
+}
+
+@{
+	async Task<string> GetData()
+	{
+		HttpClient http = new HttpClient();
+		return await http.GetStringAsync(@"https://api.nasa.gov/planetary/apod?api_key=WeFvQLpKAkbQZVpTySYq2aVJjh4HqgIdJoXDHehm");
+	}
+
+	JObject json = JObject.Parse(Convert.ToString(GetData().Result));
+}
+
+@{
+	System.Diagnostics.Debug.WriteLine(json);
+}
+
+<style>
+	.size {
+		height: 100%;
+		width: 100%;
+	}
+</style>
+
+<div>
+	<img src="@json["hdurl"]" class="size"/>
+</div>

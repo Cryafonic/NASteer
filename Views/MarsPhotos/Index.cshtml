@@ -1,0 +1,51 @@
+﻿@{
+	ViewData["Title"] = "Mars Photos";
+	string today = DateTime.Now.ToString("yyyy-MM-dd");
+}
+
+<style>
+	.size {
+		height: 100%;
+		width: 100%;
+	}
+
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		/* display: none; <- Crashes Chrome on hover */
+		-webkit-appearance: none;
+		margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+	}
+
+	input[type=number] {
+		-moz-appearance:textfield; /* Firefox */
+	}
+
+	.green {
+		background: #2AAA8A;
+	}
+
+	.blue {
+		background: #C1E1C1;
+	}
+</style>
+
+<div>
+	<select name="rovers" id="rovers" onchange="CamHandler()">
+		<option value="none" selected>None</option>
+	</select>
+	<select name="cams" id="cams" onchange="RoverCamImgHandler()">
+		<option value="none" selected>None</option>
+	</select>
+	<br>
+	<select id="date" onchange="dateHandler()">
+		<option  value="0" selected >Solar Day(s)</option>
+		<option  value="1" >Earth Date</option>
+	</select>
+	<input id="solInput" onkeyup="solHandler()" type="number" min="0" value="1000"/>
+	<input id="earth_date" type="date" value="@today"/>
+	<div id="imageContainer"></div>
+</div>
+
+@section Scripts{
+	<script src="~/js/site.js" ></script>
+}
