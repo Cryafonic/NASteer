@@ -14,7 +14,7 @@ try {
                 $('#rovers').append(`<option class="orange" value="${roversData[i].id}">${roversData[i].name}</option>`);
             }
         }
-        
+
         console.log(camImages);
     })
 } catch (err) {
@@ -82,8 +82,16 @@ function RoverCamImgHandler() {
                 $('#imageContainer').append(`<img src="${camImages[i].img_src}" class="size" />`);
             }
 
-            if (camImages.length > 0)
-                $('#roverInfo')[0].innerHTML = `<strong>Landing Date:</strong> ${camImages[0].rover.landing_date} <strong>Launch Date:</strong> ${camImages[0].rover.launch_date} <strong>status:</strong> ${camImages[0].rover.status}`;
+            for (let i = 0; i < roversData.length; i++) {
+                if ($('#rovers')[0].value == roversData[i].id) {
+                    $('#roverInfo')[0].innerHTML = `<strong>Landing Date:</strong> ${roversData[0].landing_date} 
+                                                    <strong>Launch Date:</strong> ${roversData[0].launch_date} 
+                                                    <strong>status:</strong> ${roversData[0].status} 
+                                                    <strong>Max sol</strong>: ${roversData[0].max_sol}
+                                                    <br>
+                                                    <strong>Max Date</strong>: ${roversData[0].max_date}`;
+                }
+            }
         })
     } else {
         fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/${selectedRover}/photos?earth_date=${earthDate}&camera=${selectedCam}&api_key=WeFvQLpKAkbQZVpTySYq2aVJjh4HqgIdJoXDHehm`).then(x => x.json()).then(data => {
@@ -97,8 +105,16 @@ function RoverCamImgHandler() {
                 $('#imageContainer').append(`<img src="${camImages[i].img_src}" class="size" />`);
             }
 
-            if (camImages.length > 0)
-                $('#roverInfo')[0].innerHTML = `<strong>Landing Date:</strong> ${camImages[0].rover.landing_date} <strong>Launch Date:</strong> ${camImages[0].rover.launch_date} <strong>status:</strong> ${camImages[0].rover.status} sol: ${camImages[0].sol}`;
+            for (let i = 0; i < roversData.length; i++) {
+                if ($('#rovers')[0].value == roversData[i].id) {
+                    $('#roverInfo')[0].innerHTML = `<strong>Landing Date:</strong> ${roversData[0].landing_date} 
+                                                    <strong>Launch Date:</strong> ${roversData[0].launch_date} 
+                                                    <strong>status:</strong> ${roversData[0].status} 
+                                                    <strong>Max sol</strong>: ${roversData[0].max_sol}
+                                                    <br>
+                                                    <strong>Max Date</strong>: ${roversData[0].max_date}`;
+                }
+            }
         })
     }
 }
