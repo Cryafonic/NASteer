@@ -1,23 +1,34 @@
-﻿let roversData = {};
+﻿//TODO: buttons for gallery view and slide view.
+let roversData = {};
 let camImages = {};
 let solInput = 1000;
 
-//TODO: buttons for gallery view and slide view.
+try {
+    fetch("https://api.nasa.gov/mars-photos/api/v1/rovers?api_key=WeFvQLpKAkbQZVpTySYq2aVJjh4HqgIdJoXDHehm").then(x => x.json()).then(data => {
+        roversData = data.rovers;
+    }).then(() => {
+        for (let i = 0; i < roversData.length; i++) {
+            if (roversData[i].status == "active") {
+                $('#rovers').append(`<option class="green" value="${roversData[i].id}">${roversData[i].name}</option>`);
+            } else if (roversData[i].status == "complete") {
+                $('#rovers').append(`<option class="orange" value="${roversData[i].id}">${roversData[i].name}</option>`);
+            }
+        }
+        
+        console.log(camImages);
+    })
+} catch (err) {
+    console.log(err);
+}
 
 $(() => {
     $("#earth_date").hide()
-})
 
-fetch("https://api.nasa.gov/mars-photos/api/v1/rovers?api_key=WeFvQLpKAkbQZVpTySYq2aVJjh4HqgIdJoXDHehm").then(x => x.json()).then(data => {
-    roversData = data.rovers;
-}).then(() => {
-    for (let i = 0; i < roversData.length; i++) {
-        if (roversData[i].status == "active") {
-            $('#rovers').append(`<option class="green" value="${roversData[i].id}">${roversData[i].name}</option>`);
-        } else if (roversData[i].status == "complete") {
-            $('#rovers').append(`<option class="blue" value="${roversData[i].id}">${roversData[i].name}</option>`);
+    $("#solInput").on("keypress", (event) => {
+        if (event.key == "Enter") {
+            RoverCamImgHandler();
         }
-    }
+    });
 })
 
 function CamHandler() {
@@ -51,6 +62,8 @@ function RoverCamImgHandler() {
     var selectedCam = $('#cams')[0].value;
     var earthDate = $('#earth_date')[0].value;
     var selectedRover;
+    $('#imageContainer')[0].innerHTML = "<p>No Data!</p>";
+    $('#roverInfo').empty();
     for (let i = 0; i < roversData.length; i++) {
         if ($('#rovers')[0].value == roversData[i].id) {
             selectedRover = roversData[i].name;
@@ -62,20 +75,30 @@ function RoverCamImgHandler() {
             camImages = data.photos;
             console.log(data.photos);
         }).then(() => {
-            $('#imageContainer').empty();
+            if (camImages.length > 0)
+                $('#imageContainer').empty();
+
             for (let i = 0; i < camImages.length; i++) {
                 $('#imageContainer').append(`<img src="${camImages[i].img_src}" class="size" />`);
             }
+
+            if (camImages.length > 0)
+                $('#roverInfo')[0].innerHTML = `<strong>Landing Date:</strong> ${camImages[0].rover.landing_date} <strong>Launch Date:</strong> ${camImages[0].rover.launch_date} <strong>status:</strong> ${camImages[0].rover.status}`;
         })
     } else {
         fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/${selectedRover}/photos?earth_date=${earthDate}&camera=${selectedCam}&api_key=WeFvQLpKAkbQZVpTySYq2aVJjh4HqgIdJoXDHehm`).then(x => x.json()).then(data => {
             camImages = data.photos;
             console.log(data.photos);
         }).then(() => {
-            $('#imageContainer').empty();
+            if (camImages.length > 0)
+                $('#imageContainer').empty();
+
             for (let i = 0; i < camImages.length; i++) {
                 $('#imageContainer').append(`<img src="${camImages[i].img_src}" class="size" />`);
             }
+
+            if (camImages.length > 0)
+                $('#roverInfo')[0].innerHTML = `<strong>Landing Date:</strong> ${camImages[0].rover.landing_date} <strong>Launch Date:</strong> ${camImages[0].rover.launch_date} <strong>status:</strong> ${camImages[0].rover.status} sol: ${camImages[0].sol}`;
         })
     }
 }

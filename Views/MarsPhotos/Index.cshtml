@@ -9,23 +9,12 @@
 		width: 100%;
 	}
 
-	input::-webkit-outer-spin-button,
-	input::-webkit-inner-spin-button {
-		/* display: none; <- Crashes Chrome on hover */
-		-webkit-appearance: none;
-		margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-	}
-
-	input[type=number] {
-		-moz-appearance:textfield; /* Firefox */
-	}
-
 	.green {
 		background: #2AAA8A;
 	}
 
-	.blue {
-		background: #C1E1C1;
+	.orange {
+		background: #FF5733;
 	}
 </style>
 
@@ -41,8 +30,9 @@
 		<option  value="0" selected >Solar Day(s)</option>
 		<option  value="1" >Earth Date</option>
 	</select>
-	<input id="solInput" onkeyup="solHandler()" type="number" min="0" value="1000"/>
-	<input id="earth_date" type="date" value="@today"/>
+	<input id="solInput" onkeyup="solHandler()" type="number" min="0" value="1000" />
+	<input id="earth_date" type="date" value="@today" onchange="RoverCamImgHandler()" />
+	<p id="roverInfo"></p>
 	<div id="imageContainer"></div>
 </div>
 
