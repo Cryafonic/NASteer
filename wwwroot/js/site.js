@@ -81,15 +81,18 @@ function RoverCamImgHandler() {
             for (let i = 0; i < camImages.length; i++) {
                 $('#imageContainer').append(`<img src="${camImages[i].img_src}" class="size" />`);
             }
+// TODO Fix update issue when selecting different rover
 
             for (let i = 0; i < roversData.length; i++) {
                 if ($('#rovers')[0].value == roversData[i].id) {
-                    $('#roverInfo')[0].innerHTML = `<strong>Landing Date:</strong> ${roversData[0].landing_date} 
+                    $('#roverInfo')[0].innerHTML = `<strong>Name:</strong> ${roversData[0].name}
+                                                    <strong>Landing Date:</strong> ${roversData[0].landing_date}
                                                     <strong>Launch Date:</strong> ${roversData[0].launch_date} 
-                                                    <strong>status:</strong> ${roversData[0].status} 
-                                                    <strong>Max sol</strong>: ${roversData[0].max_sol}
+                                                    <strong>Status:</strong> ${roversData[0].status} 
                                                     <br>
-                                                    <strong>Max Date</strong>: ${roversData[0].max_date}`;
+                                                    <strong>Max sol:</strong> ${roversData[0].max_sol}
+                                                    <strong>Max Date:</strong> ${roversData[0].max_date}
+                                                    <strong>Total Photos:</strong> ${roversData[0].total_photos}`;
                 }
             }
         })
@@ -107,12 +110,14 @@ function RoverCamImgHandler() {
 
             for (let i = 0; i < roversData.length; i++) {
                 if ($('#rovers')[0].value == roversData[i].id) {
-                    $('#roverInfo')[0].innerHTML = `<strong>Landing Date:</strong> ${roversData[0].landing_date} 
+                    $('#roverInfo')[0].innerHTML = `<strong>Name:</strong> ${roversData[0].name}
+                                                    <strong>Landing Date:</strong> ${roversData[0].landing_date}
                                                     <strong>Launch Date:</strong> ${roversData[0].launch_date} 
-                                                    <strong>status:</strong> ${roversData[0].status} 
-                                                    <strong>Max sol</strong>: ${roversData[0].max_sol}
+                                                    <strong>Status:</strong> ${roversData[0].status} 
                                                     <br>
-                                                    <strong>Max Date</strong>: ${roversData[0].max_date}`;
+                                                    <strong>Max sol:</strong> ${roversData[0].max_sol}
+                                                    <strong>Max Date:</strong> ${roversData[0].max_date}
+                                                    <strong>Total Photos:</strong> ${roversData[0].total_photos}`;
                 }
             }
         })
